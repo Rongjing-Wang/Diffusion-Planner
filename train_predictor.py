@@ -68,6 +68,7 @@ def get_args():
     parser.add_argument('--seed', type=int, help='fix random seed', default=3407)
     parser.add_argument('--train_epochs', type=int, help='epochs of training', default=500)
     parser.add_argument('--save_utd', type=int, help='save frequency', default=20)
+    # parser.add_argument('--batch_size', type=int, help='batch size (default: 2048)', default=2048)
     parser.add_argument('--batch_size', type=int, help='batch size (default: 2048)', default=2048)
     parser.add_argument('--learning_rate', type=float, help='learning rate (default: 5e-4)', default=5e-4)
     parser.add_argument('--warm_up_epoch', type=int, help='number of warm up', default=5)
@@ -160,7 +161,8 @@ def model_training(args):
     diffusion_planner = diffusion_planner.to(rank if args.device == 'cuda' else args.device)
 
     if args.ddp:
-        diffusion_planner = DDP(diffusion_planner, device_ids=[rank])
+        # 添加 find_unused_parameters=True 来解决 DDP 报错
+        diffusion_planner = DDP(diffusion_planner, device_ids=[rank], find_unused_parameters=True)
 
     if args.use_ema:
         model_ema = ModelEma(

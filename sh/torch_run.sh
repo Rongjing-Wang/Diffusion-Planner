@@ -1,0 +1,15 @@
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+
+###################################
+# User Configuration Section
+###################################
+RUN_PYTHON_PATH="/home/wangrongjing/miniconda3/envs/planner/bin/python" # python path (e.g., "/home/xxx/anaconda3/envs/diffusion_planner/bin/python")
+
+# Set training data path
+TRAIN_SET_PATH="/home/wangrongjing/nuplan/exp" # preprocess data using data_process.sh
+TRAIN_SET_LIST_PATH="/home/wangrongjing/Diffusion-Planner/diffusion_planner_training.json"
+###################################
+
+sudo -E $RUN_PYTHON_PATH -m torch.distributed.run --nnodes 1 --nproc-per-node 8 --standalone train_predictor.py \
+--train_set  $TRAIN_SET_PATH \
+--train_set_list  $TRAIN_SET_LIST_PATH \

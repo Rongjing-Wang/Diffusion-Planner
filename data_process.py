@@ -71,10 +71,36 @@ if __name__ == "__main__":
     scenarios = builder.get_scenarios(scenario_filter, worker)
     print(f"Total number of scenarios: {len(scenarios)}")
 
+    # 1. 获取已经处理过的文件名
+    all_npz_files = [f for f in os.listdir(args.save_path) if f.endswith('.npz')]
+    
+    # 提取 Token。假设格式永远是 "地图名_Token.npz" 或 "Token.npz"
+    processed_tokens = set()
+    for f in all_npz_files:
+        name_without_ext = f.replace('.npz', '')
+        if '_' in name_without_ext:
+            # 取下划线后面的部分作为 Token
+            token = name_without_ext.split('_')[-1]
+        else:
+            token = name_without_ext
+        processed_tokens.add(token)
+    
+    # 2. 过滤掉已经存在的场景
+    remaining_scenarios = [s for s in scenarios if s.token not in processed_tokens]
+    
+    skipped_count = len(scenarios) - len(remaining_scenarios)
+    print(f"Detected {skipped_count} already processed scenarios. Skipping...")
+    print(f"Total number of scenarios to process: {len(remaining_scenarios)}")
+    # ------------------------------------
+
     # process data
     del worker, builder, scenario_filter
-    processor = DataProcessor(args)
-    processor.work(scenarios)
+    
+    if len(remaining_scenarios) > 0:
+        processor = DataProcessor(args)
+        processor.work(remaining_scenarios) # 仅传入未处理的场景
+    else:
+        print("All scenarios are already processed.")
 
     npz_files = [f for f in os.listdir(args.save_path) if f.endswith('.npz')]
 

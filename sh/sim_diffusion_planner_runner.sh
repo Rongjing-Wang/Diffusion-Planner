@@ -5,29 +5,39 @@ export HYDRA_FULL_ERROR=1
 # User Configuration Section
 ###################################
 # Set environment variables
-export NUPLAN_DEVKIT_ROOT="REPLACE_WITH_NUPLAN_DEVIKIT_DIR"  # nuplan-devkit absolute path (e.g., "/home/user/nuplan-devkit")
-export NUPLAN_DATA_ROOT="REPLACE_WITH_DATA_DIR"  # nuplan dataset absolute path (e.g. "/data")
-export NUPLAN_MAPS_ROOT="REPLACE_WITH_MAPS_DIR" # nuplan maps absolute path (e.g. "/data/nuplan-v1.1/maps")
-export NUPLAN_EXP_ROOT="REPLACE_WITH_EXP_DIR" # nuplan experiment absolute path (e.g. "/data/nuplan-v1.1/exp")
+# export NUPLAN_DEVKIT_ROOT="REPLACE_WITH_NUPLAN_DEVIKIT_DIR"  # nuplan-devkit absolute path (e.g., "/home/user/nuplan-devkit")
+# export NUPLAN_DATA_ROOT="REPLACE_WITH_DATA_DIR"  # nuplan dataset absolute path (e.g. "/data")
+# export NUPLAN_MAPS_ROOT="REPLACE_WITH_MAPS_DIR" # nuplan maps absolute path (e.g. "/data/nuplan-v1.1/maps")
+# export NUPLAN_EXP_ROOT="REPLACE_WITH_EXP_DIR" # nuplan experiment absolute path (e.g. "/data/nuplan-v1.1/exp")
+
+export NUPLAN_DEVKIT_ROOT="/home/wangrongjing/nuplan-devkit"  # nuplan-devkit absolute path (e.g., "/home/user/nuplan-devkit")
+# export NUPLAN_DATA_ROOT="/home/wangrongjing/nuplan/dataset"  # nuplan dataset absolute path (e.g. "/data")
+export NUPLAN_DATA_ROOT="/mnt/nuplan_data"  # nuplan dataset absolute path (e.g. "/data")
+export NUPLAN_MAPS_ROOT="/home/wangrongjing/nuplan/dataset/maps" # nuplan maps absolute path (e.g. "/data/nuplan-v1.1/maps")
+export NUPLAN_EXP_ROOT="/home/wangrongjing/nuplan/exp" # nuplan experiment absolute path (e.g. "/data/nuplan-v1.1/exp")
 
 # Dataset split to use
-# Options: 
+# Options: c
 #   - "test14-random"
 #   - "test14-hard"
 #   - "val14"
-SPLIT="REPLACE_WITH_SPLIT"  # e.g., "val14"
+# SPLIT="REPLACE_WITH_SPLIT"  # e.g., "val14"
+SPLIT="val14"  # e.g., "val14"
 
 # Challenge type
 # Options: 
 #   - "closed_loop_nonreactive_agents"
 #   - "closed_loop_reactive_agents"
-CHALLENGE="REPLACE_WITH_CHALLENGE"  # e.g., "closed_loop_nonreactive_agents"
+# CHALLENGE="REPLACE_WITH_CHALLENGE"  # e.g., "closed_loop_nonreactive_agents"
+# CHALLENGE="closed_loop_nonreactive_agents"  # e.g., "closed_loop_nonreactive_agents"
+CHALLENGE="closed_loop_reactive_agents"  # e.g., "closed_loop_nonreactive_agents"
+
 ###################################
 
 
 BRANCH_NAME=diffusion_planner_release
-ARGS_FILE=./checkpoints/args.json
-CKPT_FILE=./checkpoints/model.pth
+ARGS_FILE=/home/wangrongjing/Diffusion-Planner/checkpoints/args2.json
+CKPT_FILE=/home/wangrongjing/Diffusion-Planner/checkpoints/latest.pth
 
 if [ "$SPLIT" == "val14" ]; then
     SCENARIO_BUILDER="nuplan"
